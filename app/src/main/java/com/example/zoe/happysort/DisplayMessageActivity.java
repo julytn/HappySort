@@ -1,6 +1,7 @@
 package com.example.zoe.happysort;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        Bitmap image = intent.getParcelableExtra(MainActivity.EXTRA_IMAGE);
         TextView textView = new TextView(this);
         textView.setTextSize(18);
         textView.setText(message);

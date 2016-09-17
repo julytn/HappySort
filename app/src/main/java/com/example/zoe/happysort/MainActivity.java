@@ -1,42 +1,41 @@
 package com.example.zoe.happysort;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.happysort.MESSAGE";
+    public final static String EXTRA_IMAGE = "com.example.happysort.IMAGE";
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private Bitmap mBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Firebase.setAndroidContext(this);
-//        Firebase myFirebaseRef = new Firebase("https://happysort-e1592.firebaseio.com/");
-//
-//        myFirebaseRef.child("Awning").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                System.out.println("~~~ SOMETHING HERE");
-//                System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
-//                Log.d("MyApp","I am here");
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError error) {
-//            }
-//        });
-
     }
 
     public class WasteItem {
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 newItem.name = message;
-//                System.out.println("~~~ SOMETHING HERE");
                 String instructions = (String) snapshot.getValue();
                 newItem.instructions = instructions;
 
@@ -79,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 intent.putExtra(EXTRA_MESSAGE, newItem.getInstructions());
+                intent.putExtra(EXTRA_IMAGE, mBitmap);
                 startActivity(intent);
             }
 
@@ -86,7 +85,30 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(FirebaseError error) {
             }
         });
+    }
 
 
+    public void sendPhoto(View view) {
+        /*
+        System.out.println("Send Photo method &&&&&&&&&&&&&&");
+        PhotoIntentActivity photoIntentActivity = new PhotoIntentActivity();
+        System.out.println("Mae new photo intent activity");
+        photoIntentActivity.dispatchTakePictureIntent();
+        System.out.println("Dispatched take picture intent");*/
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        System.out.println("Made new intent");
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            System.out.println("Resolved activity");
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            mBitmap = (Bitmap) extras.get("data");
+        }
     }
 }
