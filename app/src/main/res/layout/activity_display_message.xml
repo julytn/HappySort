@@ -10,4 +10,5 @@
     android:id="@+id/activity_display_message"
     tools:context="com.example.zoe.happysort.DisplayMessageActivity">
 
+
 </RelativeLayout>

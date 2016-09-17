@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "924927451429",
+    "firebase_url": "https://happysort-e1592.firebaseio.com",
+    "project_id": "happysort-e1592",
+    "storage_bucket": "happysort-e1592.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924927451429:android:57a31f992d74ca8c",
+        "android_client_info": {
+          "package_name": "com.example.zoe.happysort"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924927451429-2792atbkhdtujasc1ctnnn6tnns0qe6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD45Aa0HABZXhzkuijiCR17ZIpAEMTLy3o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
