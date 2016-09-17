@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class DisplayMessageActivity extends AppCompatActivity {
 
     @Override
@@ -21,7 +24,11 @@ public class DisplayMessageActivity extends AppCompatActivity {
         textView.setTextSize(18);
         textView.setText(message);
 
+
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_display_message);
         layout.addView(textView);
     }
+
+
+
 }

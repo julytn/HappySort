@@ -43,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -343,6 +344,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return message;
+    }
+    
+
+    public String[] parseInput(String input) {
+        String newInput = input;
+        newInput = newInput.toLowerCase();
+        newInput = newInput.replace('-', ' ');
+        System.out.println(newInput);
+        String[] inputWords = newInput.replaceAll("^[,\\s]+", "").split("[,\\s]+");
+        System.out.println(Arrays.toString(inputWords));
+        return inputWords;
     }
 
 }
