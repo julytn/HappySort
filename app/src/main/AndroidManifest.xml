@@ -3,6 +3,7 @@
     package="com.example.zoe.happysort">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -22,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".DisplayMessageActivity" />
-        <activity android:name=".PhotoIntentActivity"></activity>
+        <activity android:name=".PhotoIntentActivity" />
+        <activity android:name=".AnalyzedImageActivity"></activity>
     </application>
 
 </manifest>
