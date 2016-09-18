@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        findViewById(R.id.loadingPanel).setVisibility(View.INVISIBLE);
         Button btnCapture = (Button) findViewById(R.id.btnCapture);
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Intent intent = new Intent(this, AnalyzedImageActivity.class);
         mImageDetailsMain.setText("Uploading image, please wait...");
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         // Do the real work in an async task, because we need to use the network anyway
         new AsyncTask<Object, Void, String>() {
             @Override
@@ -325,6 +326,8 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("About to execute image details");
                 intent.putExtra(EXTRA_IMAGE_DETAILS, result);
                 startActivity(intent);
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
             }
         }.execute();
 
