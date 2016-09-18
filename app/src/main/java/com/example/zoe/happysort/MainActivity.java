@@ -94,27 +94,20 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                 builder.create().show();
-                System.out.println("1234");
             }
         });
-        System.out.println("Outside the function");
-//        Intent intent = new Intent(this, DisplayMessageActivity.class);
-//        intent.putExtra(EXTRA_MESSAGE, newItem.getInstructions());
-//        intent.putExtra(EXTRA_IMAGE, mBitmap);
-//        startActivity(intent);
+
         mImageDetailsMain = (TextView) findViewById(R.id.image_details);
         mImageDetails = (TextView) findViewById(R.id.image_details2);
         mMainImage = (ImageView) findViewById(R.id.main_image2);
     }
 
     public void startGalleryChooser() {
-        System.out.println("Staritng gallery chooer");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select a photo"),
                 GALLERY_IMAGE_REQUEST);
-        System.out.println("Dont");
     }
 
     public void startCamera() {
@@ -196,13 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-////            System.out.println("2@222@");
-//            mBitmap = (Bitmap) extras.get("data");
-////            System.out.println("```~~");
 
-//        }
         System.out.println("!@#!@#!@#!@#!@#");
         if (requestCode == GALLERY_IMAGE_REQUEST && resultCode == RESULT_OK) {
             System.out.println("Gallery");
@@ -327,6 +314,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_IMAGE_DETAILS, result);
                 startActivity(intent);
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                mImageDetailsMain.setText("");
 
             }
         }.execute();
