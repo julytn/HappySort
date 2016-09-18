@@ -81,10 +81,18 @@
         android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:id="@+id/image_details"
         android:layout_height="wrap_content"
-        android:text=""/>
+        android:text=""
+        android:gravity="center"
+        android:layout_weight="0.31" />
 
+    <ProgressBar
+        android:id="@+id/loadingPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
