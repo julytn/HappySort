@@ -8,11 +8,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,10 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.firebase.client.utilities.Base64;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -38,9 +44,19 @@ import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+//import org.json.simple.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +66,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.happysort.MESSAGE";
+    public final static String EXTRA_ITEMS_MESSAGE = "com.example.happysort.ITEMS_MESSAGE";
     public final static String EXTRA_IMAGE = "com.example.happysort.IMAGE";
     public final static String EXTRA_IMAGE_DETAILS = "com.example.happysort.MESSAGE";
     public final static String EXTRA_UPLOADED_IMAGE = "com.example.happysort.IMAGE";
@@ -65,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mMainImage;
 
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_IMAGE_CAPTURE = 4;
 
     private Bitmap mBitmap;
 
@@ -73,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         findViewById(R.id.loadingPanel).setVisibility(View.INVISIBLE);
         Button btnCapture = (Button) findViewById(R.id.btnCapture);
         btnCapture.setOnClickListener(new View.OnClickListener() {
@@ -98,8 +120,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mImageDetailsMain = (TextView) findViewById(R.id.image_details);
-        mImageDetails = (TextView) findViewById(R.id.image_details2);
-        mMainImage = (ImageView) findViewById(R.id.main_image2);
     }
 
     public void startGalleryChooser() {
@@ -153,10 +173,12 @@ public class MainActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         final Firebase myFirebaseRef = new Firebase("https://happysort-e1592.firebaseio.com/");
-
+        System.out.println("Got here");
         myFirebaseRef.child(message + "/INSTRUCTIONS").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                String rui_instructions = "";
+                String rui_suggested_items = "";
                 newItem.name = message;
                 String instructions = (String) snapshot.getValue();
                 newItem.instructions = instructions;
@@ -164,9 +186,23 @@ public class MainActivity extends AppCompatActivity {
                 if (instructions == null) {
                     newItem.instructions = "Sorry, we couldn't find disposal instructions for this item.";
                 }
-
-                intent.putExtra(EXTRA_MESSAGE, newItem.getInstructions());
+                try {
+                    String ruinstructions = getRuinfo(message);
+                    JSONObject obj = new JSONObject(ruinstructions);
+                    rui_instructions = obj.getString("instructions");
+                    rui_suggested_items = obj.getString("similar_item");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 intent.putExtra(EXTRA_IMAGE, mBitmap);
+
+
+
+//                JSONObject jsonObj = new JSONObject(ruinstructions);
+                intent.putExtra(EXTRA_MESSAGE, rui_instructions);
+                intent.putExtra(EXTRA_ITEMS_MESSAGE, rui_suggested_items);
                 startActivity(intent);
             }
 
@@ -176,6 +212,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public String getRuinfo(String item) throws IOException {
+        String ruinfoString = "";
+        String urlString = "http://104.155.23.57:5000/get_similar_items?item=" + "awning";
+        System.out.println(urlString);
+        URL url = new URL(urlString);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        try {
+            System.out.println("Got to the try");
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            System.out.println("!!!!!");
+            ruinfoString = readStream(in);
+            System.out.println("@@@@@");
+        } finally {
+            urlConnection.disconnect();
+        }
+        return ruinfoString;
+    }
+
+    private String readStream(InputStream is) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
+        for (String line = r.readLine(); line != null; line =r.readLine()){
+            sb.append(line);
+        }
+        is.close();
+        return sb.toString();
+    }
+
 
     public void sendPhoto(View view) {
 
@@ -183,20 +247,49 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Made new intent");
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             System.out.println("Resolved activity");
+//            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getCameraFile()));
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            System.out.println("Finished starting activity");
+
         }
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        System.out.println("!@#!@#!@#!@#!@#");
         if (requestCode == GALLERY_IMAGE_REQUEST && resultCode == RESULT_OK) {
             System.out.println("Gallery");
             uploadImage(data.getData());
         } else if (requestCode == CAMERA_IMAGE_REQUEST && resultCode == RESULT_OK) {
+            System.out.println("CAMERA IMAGE REQUEST");
             uploadImage(Uri.fromFile(getCameraFile()));
         }
+        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            System.out.println("BARCODE TIME");
+            Bundle extras = data.getExtras();
+            Bitmap barcodeBitmap = (Bitmap) extras.get("data");
+            BarcodeDetector detector =
+                    new BarcodeDetector.Builder(getApplicationContext())
+                            .setBarcodeFormats(Barcode.ALL_FORMATS)
+                            .build();
+            if(!detector.isOperational()){
+                System.out.println("Could not set up the detector!");
+                return;
+            }
+            Frame frame = new Frame.Builder().setBitmap(barcodeBitmap).build();
+            SparseArray<Barcode> barcodes = detector.detect(frame);
+            if (barcodes.size() != 0) {
+                Barcode thisCode = barcodes.valueAt(0);
+                TextView txtView = (TextView) findViewById(R.id.image_details);
+                txtView.setText(thisCode.displayValue);
+                System.out.println("@@@@@@@@@@@");
+                System.out.println(thisCode.rawValue);
+            }
+
+        }
+
     }
 
     public void uploadImage(Uri uri) {
