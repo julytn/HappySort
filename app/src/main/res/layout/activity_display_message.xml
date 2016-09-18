@@ -42,9 +42,22 @@
         android:layout_width="380dp"
         android:layout_height="80dp"
         android:id="@+id/imageView2"
+        android:background="@drawable/banner"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/banner" />
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/suggested_items_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textStyle="normal"
+        android:typeface="monospace"
+        android:textColor="#FFF28305"
+        android:text="If these are unrelated to your item, please search again with differnt keywords."
+        android:layout_below="@+id/suggested_items_title"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/suggested_items_title"
@@ -56,8 +69,9 @@
         android:gravity="center_vertical|center_horizontal"
         android:textColor="#FFF28305"
         android:text="Related Keywords"
-        android:layout_above="@+id/suggested_items"
+        android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
+
     <TextView
         android:id="@+id/suggested_items"
         android:textSize="14sp"
@@ -68,8 +82,7 @@
         android:typeface="monospace"
         tools:text="Similar items!"
         android:gravity="top|center_horizontal"
-        android:layout_marginBottom="53dp"
-        android:layout_above="@+id/imageView2"
+        android:layout_below="@+id/suggested_items_desc"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>
