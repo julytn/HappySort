@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     public static final int CAMERA_PERMISSIONS_REQUEST = 2;
     public static final int CAMERA_IMAGE_REQUEST = 3;
     private TextView mImageDetails;
-    private TextView mImageDetailsMain;
     private ImageView mMainImage;
 
 
@@ -123,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mImageDetailsMain = (TextView) findViewById(R.id.image_details);
     }
 
     public void startGalleryChooser() {
@@ -348,7 +346,6 @@ public class MainActivity extends AppCompatActivity {
     private void callCloudVision(final Bitmap bitmap) throws IOException {
 
         final Intent intent = new Intent(this, DisplayMessageActivity.class);
-        mImageDetailsMain.setText("Uploading image, please wait...");
         findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         // Do the real work in an async task, because we need to use the network anyway
         new AsyncTask<Object, Void, String>() {
@@ -446,7 +443,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_ITEMS_MESSAGE, rui_suggested_items.substring(1, rui_suggested_items.length() - 1));
                 startActivity(intent);
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                mImageDetailsMain.setText("");
 
             }
         }.execute();

@@ -12,9 +12,11 @@
     tools:context="com.example.zoe.happysort.AnalyzedImageActivity">
 <ScrollView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentEnd="false"
-    android:layout_above="@+id/imageView2">
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradientback"
+    android:paddingBottom="80dp"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,7 +26,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:id="@+id/activity_display_message"
-    android:background="@drawable/gradientback"
     tools:context="com.example.zoe.happysort.DisplayMessageActivity"
     android:orientation="vertical"
     android:gravity="center"
@@ -102,7 +103,8 @@
         android:text="If these are unrelated to your item, please search again with differnt keywords."
         android:layout_below="@+id/suggested_items_title"
         android:layout_alignParentStart="false"
-        android:gravity="center" />
+        android:gravity="center"
+        android:paddingTop="10dp" />
 
 </LinearLayout>
 </ScrollView>
