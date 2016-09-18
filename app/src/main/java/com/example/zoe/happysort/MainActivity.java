@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
         return message;
     }
-    
+
 
     public String[] parseInput(String input) {
         String newInput = input;
