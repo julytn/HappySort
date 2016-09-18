@@ -187,7 +187,9 @@ public class MainActivity extends AppCompatActivity {
                     newItem.instructions = "Sorry, we couldn't find disposal instructions for this item.";
                 }
                 try {
-                    String ruinstructions = getRuinfo(message);
+                    String parsed_message = parseInput(message);
+
+                    String ruinstructions = getRuinfo(parsed_message);
                     JSONObject obj = new JSONObject(ruinstructions);
                     rui_instructions = obj.getString("instructions");
                     rui_suggested_items = obj.getString("similar_item");
@@ -431,14 +433,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public String[] parseInput(String input) {
+    public String parseInput(String input) {
         String newInput = input;
         newInput = newInput.toLowerCase();
         newInput = newInput.replace('-', ' ');
-        System.out.println(newInput);
         String[] inputWords = newInput.replaceAll("^[,\\s]+", "").split("[,\\s]+");
-        System.out.println(Arrays.toString(inputWords));
-        return inputWords;
+
+        StringBuilder builder = new StringBuilder();
+        for(String s : inputWords) {
+            builder.append(s);
+            builder.append("%20");
+        }
+        System.out.println("1234567");
+        System.out.println(builder.toString());
+        return builder.toString();
     }
 
 }
