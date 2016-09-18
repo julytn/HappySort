@@ -11,6 +11,59 @@
     android:background="@drawable/gradientback"
     tools:context="com.example.zoe.happysort.AnalyzedImageActivity">
 
+    <TextView
+        android:id="@+id/image_details_title_ml"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:typeface="monospace"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#f28305"
+        android:text="Disposal Instructions"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/image_details_ml"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:typeface="monospace"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#f39d3b"
+        tools:text="Description!"
+        android:layout_below="@+id/image_details_title_ml"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/suggested_items_title_ml"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:typeface="monospace"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#FFF28305"
+        android:text="Related Keywords"
+        android:layout_above="@+id/suggested_items_ml"
+        android:layout_alignParentEnd="true" />
+    <TextView
+        android:id="@+id/suggested_items_ml"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:textColor="#f39d3b"
+        android:typeface="monospace"
+        tools:text="Similar items!"
+        android:gravity="top|center_horizontal"
+        android:layout_marginBottom="61dp"
+        android:layout_above="@+id/imageView3"
+        android:layout_alignParentStart="true" />
+
     <ImageView
         android:layout_width="380dp"
         android:layout_height="80dp"

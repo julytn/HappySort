@@ -16,13 +16,16 @@ public class AnalyzedImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_analyzed_image);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_IMAGE_DETAILS);
-        Bitmap image = intent.getParcelableExtra(MainActivity.EXTRA_UPLOADED_IMAGE);
-        TextView textView = new TextView(this);
-        textView.setTextSize(18);
-        textView.setText(message);
+        String description = intent.getStringExtra(MainActivity.EXTRA_ML_DESCRIPTION);
+        String keywords = intent.getParcelableExtra(MainActivity.EXTRA_ML_KEYWORDS);
+
+        TextView descriptionTextView = (TextView) findViewById(R.id.image_details_ml);
+        descriptionTextView.setText(description);
+
+        TextView keywordTextView = (TextView) findViewById(R.id.suggested_items_ml);
+        keywordTextView.setText(keywords);
 
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_analyzed_image);
-        layout.addView(textView);
+
     }
 }

@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_ITEM_NAME = "com.example.happysort.EXTRA_ITEM_NAME";
     public final static String EXTRA_MESSAGE = "com.example.happysort.MESSAGE";
     public final static String EXTRA_ITEMS_MESSAGE = "com.example.happysort.ITEMS_MESSAGE";
+    public final static String EXTRA_ML_DESCRIPTION = "com.example.happysort.BLAH";
+    public final static String EXTRA_ML_KEYWORDS = "com.example.happysort.BLAsdfH";
+
     public final static String EXTRA_IMAGE = "com.example.happysort.IMAGE";
     public final static String EXTRA_IMAGE_DETAILS = "com.example.happysort.MESSAGE";
     public final static String EXTRA_UPLOADED_IMAGE = "com.example.happysort.IMAGE";
@@ -224,11 +227,8 @@ public class MainActivity extends AppCompatActivity {
         URL url = new URL(urlString);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
-            System.out.println("Got to the try");
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            System.out.println("!!!!!");
             ruinfoString = readStream(in);
-            System.out.println("@@@@@");
         } finally {
             urlConnection.disconnect();
         }
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void callCloudVision(final Bitmap bitmap) throws IOException {
 
-        final Intent intent = new Intent(this, AnalyzedImageActivity.class);
+        final Intent intent = new Intent(this, DisplayMessageActivity.class);
         mImageDetailsMain.setText("Uploading image, please wait...");
         findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         // Do the real work in an async task, because we need to use the network anyway
@@ -409,7 +409,39 @@ public class MainActivity extends AppCompatActivity {
 
             protected void onPostExecute(String result) {
                 System.out.println("About to execute image details");
-                intent.putExtra(EXTRA_IMAGE_DETAILS, result);
+
+                String lines[] = result.split("[\\r\\n]+");
+                String[] matches = Arrays.copyOfRange(lines, 1, lines.length);
+                String items = "";
+                for (String match : matches ) {
+                    String[] parts = match.split(": ");
+                    System.out.println(parts[1]);
+                    items += parts[1];
+                    items += " ";
+                }
+                System.out.println("33333333");
+                System.out.println(items);
+                String rui_item = parseInput(items);
+                String rui_instructions = "";
+                String rui_suggested_items = "";
+                String ruinstructions = "";
+                try {
+                    ruinstructions = getRuinfo(rui_item);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                JSONObject obj = null;
+                try {
+                    obj = new JSONObject(ruinstructions);
+                    rui_instructions = obj.getString("instructions");
+                    rui_suggested_items = obj.getString("similar_item");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                intent.putExtra(EXTRA_MESSAGE, rui_instructions);
+                intent.putExtra(EXTRA_ITEMS_MESSAGE, rui_suggested_items);
                 startActivity(intent);
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 mImageDetailsMain.setText("");
