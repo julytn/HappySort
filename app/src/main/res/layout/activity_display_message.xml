@@ -7,22 +7,44 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/activity_analyzed_image"
+    android:background="@drawable/gradientback"
+    tools:context="com.example.zoe.happysort.AnalyzedImageActivity">
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="false"
+    android:layout_above="@+id/imageView2">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     android:id="@+id/activity_display_message"
     android:background="@drawable/gradientback"
     tools:context="com.example.zoe.happysort.DisplayMessageActivity"
-    android:gravity="center">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_above="@+id/imageView2"
+    android:weightSum="1"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true">
 
     <TextView
         android:id="@+id/image_details_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textStyle="normal"
+        android:textStyle="bold"
         android:typeface="monospace"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="#f28305"
         android:layout_alignParentEnd="true"
-        tools:text="Title Placeholder"/>
+        tools:text="Title Placeholder"
+        android:layout_weight="0.10" />
 
     <TextView
         android:id="@+id/image_details2"
@@ -37,15 +59,37 @@
         android:textColor="#f39d3b"
         tools:text="Description!"
         android:layout_below="@+id/image_details_title"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_weight="0.25" />
 
-    <ImageView
-        android:layout_width="380dp"
-        android:layout_height="80dp"
-        android:id="@+id/imageView2"
-        android:background="@drawable/banner"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+    <TextView
+        android:id="@+id/suggested_items_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#FFF28305"
+        android:text="Related Keywords"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_weight="0.27"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/suggested_items"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:textColor="#f39d3b"
+        android:typeface="monospace"
+        tools:text="Similar items!"
+        android:gravity="top|center_horizontal"
+        android:layout_below="@+id/suggested_items_desc"
+        android:layout_alignParentStart="true"
+        android:layout_weight="0.25" />
 
     <TextView
         android:id="@+id/suggested_items_desc"
@@ -60,30 +104,14 @@
         android:layout_alignParentStart="false"
         android:gravity="center" />
 
-    <TextView
-        android:id="@+id/suggested_items_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        android:typeface="monospace"
-        android:gravity="center_vertical|center_horizontal"
-        android:textColor="#FFF28305"
-        android:text="Related Keywords"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+</LinearLayout>
+</ScrollView>
 
-    <TextView
-        android:id="@+id/suggested_items"
-        android:textSize="14sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        android:textColor="#f39d3b"
-        android:typeface="monospace"
-        tools:text="Similar items!"
-        android:gravity="top|center_horizontal"
-        android:layout_below="@+id/suggested_items_desc"
+    <ImageView
+        android:layout_width="380dp"
+        android:layout_height="80dp"
+        android:id="@+id/imageView2"
+        android:background="@drawable/banner"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
-
 </RelativeLayout>

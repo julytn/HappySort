@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
             uploadImage(Uri.fromFile(getCameraFile()));
         }
         else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            System.out.println("BARCODE TIME");
+            final Intent intent = new Intent(this, DisplayMessageActivity.class);
             Bundle extras = data.getExtras();
             Bitmap barcodeBitmap = (Bitmap) extras.get("data");
             BarcodeDetector detector =
@@ -287,10 +287,12 @@ public class MainActivity extends AppCompatActivity {
             SparseArray<Barcode> barcodes = detector.detect(frame);
             if (barcodes.size() != 0) {
                 Barcode thisCode = barcodes.valueAt(0);
-                TextView txtView = (TextView) findViewById(R.id.image_details);
-                txtView.setText(thisCode.displayValue);
-                System.out.println("@@@@@@@@@@@");
-                System.out.println(thisCode.rawValue);
+//                TextView txtView = (TextView) findViewById(R.id.image_details);
+//                txtView.setText(thisCode.displayValue);
+                intent.putExtra(EXTRA_ITEM_NAME, "your item");
+                intent.putExtra(EXTRA_MESSAGE, thisCode.displayValue);
+                intent.putExtra(EXTRA_ITEMS_MESSAGE, "");
+                startActivity(intent);
             }
 
         }
@@ -439,9 +441,9 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
+                intent.putExtra(EXTRA_ITEM_NAME, "your item");
                 intent.putExtra(EXTRA_MESSAGE, rui_instructions);
-                intent.putExtra(EXTRA_ITEMS_MESSAGE, rui_suggested_items);
+                intent.putExtra(EXTRA_ITEMS_MESSAGE, rui_suggested_items.substring(1, rui_suggested_items.length() - 1));
                 startActivity(intent);
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 mImageDetailsMain.setText("");
