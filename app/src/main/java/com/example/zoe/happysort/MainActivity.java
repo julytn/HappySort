@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String getRuinfo(String item) throws IOException {
         String ruinfoString = "";
-        String urlString = "http://104.155.23.57:5000/get_similar_items?item=" + "awning";
+        String urlString = "http://104.155.23.57:5000/get_similar_items?item=" + item;
         System.out.println(urlString);
         URL url = new URL(urlString);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

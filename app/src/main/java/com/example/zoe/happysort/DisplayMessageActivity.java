@@ -25,12 +25,10 @@ public class DisplayMessageActivity extends AppCompatActivity {
         String suggested_items_message = intent.getStringExtra(MainActivity.EXTRA_ITEMS_MESSAGE);
 //        Bitmap image = intent.getParcelableExtra(MainActivity.EXTRA_IMAGE);
         TextView textView = (TextView) findViewById(R.id.image_details2);
-        textView.setTextSize(18);
         textView.setText(Html.fromHtml(message));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         TextView suggestedItems = (TextView) findViewById(R.id.suggested_items);
-        suggestedItems.setTextSize(18);
         suggestedItems.setText(suggested_items_message);
 
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_display_message);
