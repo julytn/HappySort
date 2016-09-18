@@ -21,9 +21,14 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        String title = intent.getStringExtra(MainActivity.EXTRA_ITEM_NAME);
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         String suggested_items_message = intent.getStringExtra(MainActivity.EXTRA_ITEMS_MESSAGE);
 //        Bitmap image = intent.getParcelableExtra(MainActivity.EXTRA_IMAGE);
+
+        TextView titleTextView = (TextView) findViewById(R.id.image_details_title);
+        titleTextView.setText("Disposal Instructions for ".concat(title));
+
         TextView textView = (TextView) findViewById(R.id.image_details2);
         textView.setText(Html.fromHtml(message));
         textView.setMovementMethod(LinkMovementMethod.getInstance());

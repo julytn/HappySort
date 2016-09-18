@@ -21,14 +21,15 @@
         android:typeface="monospace"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="#f28305"
-        android:text="Disposal Instructions"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        tools:text="Title Placeholder"/>
 
     <TextView
         android:id="@+id/image_details2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
+        android:textColorLink="#0f4cc6"
         android:textSize="14sp"
         android:textStyle="normal"
         android:typeface="monospace"
@@ -48,7 +49,7 @@
 
     <TextView
         android:id="@+id/suggested_items_desc"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"
         android:textStyle="normal"
@@ -56,8 +57,8 @@
         android:textColor="#FFF28305"
         android:text="If these are unrelated to your item, please search again with differnt keywords."
         android:layout_below="@+id/suggested_items_title"
-        android:layout_alignParentStart="true"
-        android:gravity="center_horizontal" />
+        android:layout_alignParentStart="false"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/suggested_items_title"

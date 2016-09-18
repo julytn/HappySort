@@ -65,6 +65,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
+    public final static String EXTRA_ITEM_NAME = "com.example.happysort.EXTRA_ITEM_NAME";
     public final static String EXTRA_MESSAGE = "com.example.happysort.MESSAGE";
     public final static String EXTRA_ITEMS_MESSAGE = "com.example.happysort.ITEMS_MESSAGE";
     public final static String EXTRA_IMAGE = "com.example.happysort.IMAGE";
@@ -169,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.edit_message);
         final String message = editText.getText().toString();
+        intent.putExtra(EXTRA_ITEM_NAME, message);
+
         final WasteItem newItem = new WasteItem();
 
         Firebase.setAndroidContext(this);
@@ -204,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                JSONObject jsonObj = new JSONObject(ruinstructions);
                 intent.putExtra(EXTRA_MESSAGE, rui_instructions);
-                intent.putExtra(EXTRA_ITEMS_MESSAGE, rui_suggested_items);
+                intent.putExtra(EXTRA_ITEMS_MESSAGE, rui_suggested_items.substring(1, rui_suggested_items.length() - 1));
                 startActivity(intent);
             }
 
