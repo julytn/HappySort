@@ -3,4 +3,5 @@
     <string name="edit_message">enter your item</string>
     <string name="button_send">SEND</string>
     <string name="upload_a_photo">UPLOAD PHOTO</string>
+    <string name="or">or</string>
 </resources>

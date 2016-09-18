@@ -3,19 +3,25 @@ import csv
 import re
 from pprint import pprint
 
+# model = gensim.models.Doc2Vec.load('wiki6B50D.model')
 # transformed = []
 # with open('waste.csv', newline='') as mycsvfile:
 #     thedata = csv.reader(mycsvfile, delimiter=',', quotechar='"')
 #     for row in thedata:
-#         transformed.append(list(map(lambda x: re.sub('[^0-9a-zA-Z]+', ' ', x.lower()), row)))
+#         new_row = [row[0], re.sub('[^0-9a-zA-Z]+', ' ', row[1].lower()), re.sub('[^0-9a-zA-Z]+', ' ', row[2].lower()),
+#                    row[3], row[4]]
+#         transformed.append(new_row)
 #
 # filtered = []
 # for row in transformed:
 #     new_row = list(map(lambda x : x.split(), row))
 #     new_row = list(map(lambda y : list(filter(lambda x : x in model.vocab, y)), new_row))
-#     filtered.append(list(map(lambda y : ' '.join(y), new_row)))
+#     new_row = [row[0], list(filter(lambda x : x in model.vocab, row[1].split())),
+#                        list(filter(lambda x : x in model.vocab, row[2].split())),
+#                row[3], row[4]]
+#     filtered.append([new_row[0], ' '.join(new_row[1]), ' '.join(new_row[2]), new_row[3], new_row[4]])
 #
-# with open('transformed.csv', 'w', newline='') as csvfile:
+# with open('transformed_new.csv', 'w', newline='') as csvfile:
 #     spamwriter = csv.writer(csvfile, delimiter=',',
 #                             quotechar='"', quoting=csv.QUOTE_MINIMAL)
 #     spamwriter.writerows(filtered)
@@ -27,7 +33,7 @@ model = gensim.models.Doc2Vec.load('wiki6B50D.model')
 
 def get_wastes():
     waste_entries = []
-    with open('transformed.csv', newline='') as mycsvfile:
+    with open('transformed_new.csv', newline='') as mycsvfile:
         thedata = csv.reader(mycsvfile, delimiter=',', quotechar='"')
         for row in thedata:
             waste_entries.append(row)
@@ -68,7 +74,8 @@ def get_similar_anything(inputs):
     return {'similar_words' : model.most_similar(inputs)}
 
 def test():
-    pprint(get_similar_items('yogurt computer'))
+    pprint(get_similar_items('computer human'))
 
 if __name__ == '__main__':
     test()
+    #print(model.most_similar(positive=['man', 'vagina'], negative=['woman']))
