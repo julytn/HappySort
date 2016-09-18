@@ -1,0 +1,5 @@
+name: htn
+channels: !!python/tuple
+- defaults
+prefix: /Users/Rutherford/anaconda3/envs/htn
+
