@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">HappySort</string>
-    <string name="edit_message">Enter your item</string>
+    <string name="edit_message">enter your item</string>
     <string name="button_send">SEND</string>
     <string name="upload_a_photo">UPLOAD PHOTO</string>
 </resources>
