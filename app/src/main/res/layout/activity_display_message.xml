@@ -8,18 +8,36 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:id="@+id/activity_display_message"
-    tools:context="com.example.zoe.happysort.DisplayMessageActivity">
+    android:background="@drawable/gradientback"
+    tools:context="com.example.zoe.happysort.DisplayMessageActivity"
+    android:gravity="center">
     <TextView
         android:id="@+id/image_details2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text=""/>
+        android:text=""
+        android:textStyle="normal"
+        android:typeface="monospace"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#f39d3b"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/main_image2" />
 
     <ImageView
         android:id="@+id/main_image2"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="380dp"
+        android:layout_height="80dp"
+        android:id="@+id/imageView2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/banner" />
 
 </RelativeLayout>
